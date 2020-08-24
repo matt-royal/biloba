@@ -1,6 +1,7 @@
 package biloba_test
 
 import (
+	"github.com/matt-royal/biloba"
 	"testing"
 
 	. "github.com/onsi/ginkgo"
@@ -9,5 +10,5 @@ import (
 
 func TestBiloba(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Biloba Suite")
+	RunSpecsWithCustomReporters(t, "Biloba Suite", biloba.DefaultReporters())
 }
