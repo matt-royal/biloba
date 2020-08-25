@@ -60,7 +60,11 @@ func (r *gotestCompatibleReporter) SpecDidComplete(spec *types.SpecSummary) {
 }
 
 func testName(spec *types.SpecSummary) string {
-	return strings.Join(spec.ComponentTexts[1:len(spec.ComponentTexts)], " ")
+	return strings.ReplaceAll(
+		strings.Join(spec.ComponentTexts[1:len(spec.ComponentTexts)], " "),
+		"(",
+		"\\(",
+	)
 }
 
 // No-Op methods for compatibility with ginkgo.Reporter

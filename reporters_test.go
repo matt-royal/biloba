@@ -342,6 +342,72 @@ var _ = Describe("GoTestCompatibleReporter", func() {
 			}))
 		})
 	})
+
+	When("the tests have strange characters", func() {
+		It("outputs them in a format that GoLand parses as nested", func() {
+			lines := testOutputLines("./test_assets/formatting")
+			groups := groupByTest(lines)
+
+			Expect(groups).To(HaveLen(6))
+
+			Expect(groups[0]).To(Equal([]testJsonEntry{
+				{Action: "run", Test: "TestFormatting", Output: "",},
+				{Action: "output", Test: "TestFormatting", Output: "=== RUN   TestFormatting\n",},
+				{Action: "output", Test: "TestFormatting", Output: "Running Suite: Formatting Suite\n",},
+				{Action: "output", Test: "TestFormatting", Output: "===============================\n",},
+				{Action: "output", Test: "TestFormatting", Output: "Random Seed: 1234\n",},
+				{Action: "output", Test: "TestFormatting", Output: "Will run 4 of 4 specs\n",},
+				{Action: "output", Test: "TestFormatting", Output: "\n",},
+				{Action: "output", Test: "TestFormatting", Output: "\n",},
+			}))
+
+			Expect(groups[1]).To(Equal([]testJsonEntry{
+				{Action: "run", Test: "FORMATTING this \\(level) has parenthesis test 1 passes", Output: "\n",},
+				{Action: "output", Test: "FORMATTING this \\(level) has parenthesis test 1 passes", Output: "=== RUN   FORMATTING this \\(level) has parenthesis test 1 passes\n",},
+				{Action: "output", Test: "FORMATTING this \\(level) has parenthesis test 1 passes", Output: "•\n",},
+				{Action: "output", Test: "FORMATTING this \\(level) has parenthesis test 1 passes", Output: "--- PASS: FORMATTING this \\(level) has parenthesis test 1 passes (TIME)\n",},
+				{Action: "output", Test: "FORMATTING this \\(level) has parenthesis test 1 passes", Output: "\n",},
+				{Action: "pass", Test: "FORMATTING this \\(level) has parenthesis test 1 passes", Output: "\n",},
+			}))
+
+			Expect(groups[2]).To(Equal([]testJsonEntry{
+				{Action: "run", Test: "FORMATTING this \\(level) has parenthesis test 2 passes", Output: "\n",},
+				{Action: "output", Test: "FORMATTING this \\(level) has parenthesis test 2 passes", Output: "=== RUN   FORMATTING this \\(level) has parenthesis test 2 passes\n",},
+				{Action: "output", Test: "FORMATTING this \\(level) has parenthesis test 2 passes", Output: "•\n",},
+				{Action: "output", Test: "FORMATTING this \\(level) has parenthesis test 2 passes", Output: "--- PASS: FORMATTING this \\(level) has parenthesis test 2 passes (TIME)\n",},
+				{Action: "output", Test: "FORMATTING this \\(level) has parenthesis test 2 passes", Output: "\n",},
+				{Action: "pass", Test: "FORMATTING this \\(level) has parenthesis test 2 passes", Output: "\n",},
+			}))
+
+			Expect(groups[3]).To(Equal([]testJsonEntry{
+				{Action: "run", Test: "FORMATTING this /level/ has slashes test 1 passes", Output: "\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 1 passes", Output: "=== RUN   FORMATTING this /level/ has slashes test 1 passes\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 1 passes", Output: "•\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 1 passes", Output: "--- PASS: FORMATTING this /level/ has slashes test 1 passes (TIME)\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 1 passes", Output: "\n",},
+				{Action: "pass", Test: "FORMATTING this /level/ has slashes test 1 passes", Output: "\n",},
+			}))
+
+			Expect(groups[4]).To(Equal([]testJsonEntry{
+				{Action: "run", Test: "FORMATTING this /level/ has slashes test 2 passes", Output: "\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 2 passes", Output: "=== RUN   FORMATTING this /level/ has slashes test 2 passes\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 2 passes", Output: "•\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 2 passes", Output: "--- PASS: FORMATTING this /level/ has slashes test 2 passes (TIME)\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 2 passes", Output: "\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 2 passes", Output: "Ran 4 of 4 Specs in TIME\n",},
+				{Action: "output", Test: "FORMATTING this /level/ has slashes test 2 passes", Output: "SUCCESS! -- 4 Passed | 0 Failed | 0 Pending | 0 Skipped\n",},
+				{Action: "pass", Test: "FORMATTING this /level/ has slashes test 2 passes", Output: "SUCCESS! -- 4 Passed | 0 Failed | 0 Pending | 0 Skipped\n",},
+			}))
+
+			Expect(groups[5]).To(Equal([]testJsonEntry{
+				{Action: "output", Test: "TestFormatting", Output: "--- PASS: TestFormatting (TIME)\n",},
+				{Action: "pass", Test: "TestFormatting", Output: "--- PASS: TestFormatting (TIME)\n",},
+				{Action: "output", Test: "TestFormatting", Output: "PASS\n"},
+				{Action: "output", Test: "TestFormatting", Output: "ok  \tgithub.com/matt-royal/biloba/test_assets/formatting\tTIME\n",},
+				{Action: "pass", Test: "TestFormatting", Output: "ok  \tgithub.com/matt-royal/biloba/test_assets/formatting\tTIME\n",},
+			}))
+		})
+	})
 })
 
 func groupByTest(lines []testJsonEntry) [][]testJsonEntry {
