@@ -10,5 +10,5 @@ import (
 
 func TestBiloba(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecsWithCustomReporters(t, "Biloba Suite", biloba.DefaultReporters())
+	RunSpecsWithDefaultAndCustomReporters(t, "Biloba Suite", biloba.GoLandReporter())
 }

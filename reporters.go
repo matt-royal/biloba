@@ -2,14 +2,13 @@ package biloba
 
 import (
 	"fmt"
+	"github.com/onsi/ginkgo/reporters"
+	"github.com/onsi/ginkgo/reporters/stenographer"
 	"github.com/onsi/ginkgo/reporters/stenographer/support/go-colorable"
 	"os"
 	"strings"
 
 	"github.com/onsi/ginkgo"
-	"github.com/onsi/ginkgo/reporters"
-	"github.com/onsi/ginkgo/reporters/stenographer"
-
 	"github.com/onsi/ginkgo/config"
 	"github.com/onsi/ginkgo/types"
 )
@@ -17,20 +16,23 @@ import (
 type gotestCompatibleReporter struct {
 }
 
-func DefaultReporters() []ginkgo.Reporter {
-	s := stenographer.New(!config.DefaultReporterConfig.NoColor, config.GinkgoConfig.FlakeAttempts > 1, colorable.NewColorableStdout())
-	defaultReporter := reporters.NewDefaultReporter(config.DefaultReporterConfig, s)
-
-	if strings.Contains(os.Getenv("XPC_SERVICE_NAME"), "goland") {
-		compatibilityReporter := NewGoTestCompatibleReporter()
-		return []ginkgo.Reporter{compatibilityReporter, defaultReporter}
-	} else {
-		return []ginkgo.Reporter{defaultReporter}
+func GoLandReporter() []ginkgo.Reporter {
+	if !strings.Contains(os.Getenv("XPC_SERVICE_NAME"), "goland") {
+		return []ginkgo.Reporter{}
 	}
+	return []ginkgo.Reporter{NewGoTestCompatibleReporter()}
 }
 
 func NewGoTestCompatibleReporter() *gotestCompatibleReporter {
 	return new(gotestCompatibleReporter)
+}
+
+// deprecated: Use ginkgo.RunSpecsWithDefaultAndCustomReporters with GoLandReporter() instead
+func DefaultReporters() []ginkgo.Reporter {
+	s := stenographer.New(!config.DefaultReporterConfig.NoColor, config.GinkgoConfig.FlakeAttempts > 1, colorable.NewColorableStdout())
+	defaultReporter := reporters.NewDefaultReporter(config.DefaultReporterConfig, s)
+
+	return append(GoLandReporter(), defaultReporter)
 }
 
 func (r *gotestCompatibleReporter) SpecWillRun(specSummary *types.SpecSummary) {
