@@ -422,7 +422,7 @@ func standardizeTime(text string) string {
 }
 
 func testOutputLines(testPath string) []testJsonEntry {
-	cmd := exec.Command("bash", "-c", fmt.Sprintf("ginkgo -v -noColor -seed 1234 %s | go tool test2json", testPath))
+	cmd := exec.Command("bash", "-c", fmt.Sprintf("BILOBA_INTEGRATION_TEST=true ginkgo -v -noColor -seed 1234 %s | go tool test2json", testPath))
 	stdOut := gbytes.NewBuffer()
 	session, err := gexec.Start(cmd, stdOut, GinkgoWriter)
 

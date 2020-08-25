@@ -2,6 +2,7 @@ package failing_test
 
 import (
 	"github.com/matt-royal/biloba"
+	"os"
 	"testing"
 
 	. "github.com/onsi/ginkgo"
@@ -9,6 +10,9 @@ import (
 )
 
 func TestFailing(t *testing.T) {
+	if os.Getenv("BILOBA_INTEGRATION_TEST") == "" {
+		return
+	}
 	RegisterFailHandler(Fail)
 	RunSpecsWithDefaultAndCustomReporters(t, "Failing Suite", []Reporter{
 		biloba.NewGoTestCompatibleReporter(),
