@@ -78,11 +78,9 @@ var _ = Describe("GoTestCompatibleReporter", func() {
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "•\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "--- PASS: level 1 B test 2 passes (TIME)\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "\n",},
-				{Action: "pass", Test: "level 1 B test 2 passes", Output: "\n",},
-				{Action: "output", Test: "level 1 B test 2 passes", Output: "PASS\n",},
-				{Action: "output", Test: "level 1 B test 2 passes", Output: "\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "Ran 4 of 4 Specs in TIME\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "SUCCESS! -- 4 Passed | 0 Failed | 0 Pending | 0 Skipped\n",},
+				{Action: "pass", Test: "level 1 B test 2 passes", Output: "SUCCESS! -- 4 Passed | 0 Failed | 0 Pending | 0 Skipped\n",},
 			}))
 
 			Expect(groups[5]).To(Equal([]testJsonEntry{
@@ -206,9 +204,6 @@ var _ = Describe("GoTestCompatibleReporter", func() {
 				{Action: "output", Test: "level 1 B test 2 fails", Output: "\n",},
 				{Action: "output", Test: "level 1 B test 2 fails", Output: "--- FAIL: level 1 B test 2 fails (TIME)\n",},
 				{Action: "output", Test: "level 1 B test 2 fails", Output: "\n",},
-				{Action: "fail", Test: "level 1 B test 2 fails", Output: "\n",},
-				{Action: "output", Test: "level 1 B test 2 fails", Output: "FAIL\n",},
-				{Action: "output", Test: "level 1 B test 2 fails", Output: "\n",},
 				{Action: "output", Test: "level 1 B test 2 fails", Output: "\n",},
 				{Action: "output", Test: "level 1 B test 2 fails", Output: "Summarizing 4 Failures:\n",},
 				{Action: "output", Test: "level 1 B test 2 fails", Output: "\n",},
@@ -226,6 +221,7 @@ var _ = Describe("GoTestCompatibleReporter", func() {
 				{Action: "output", Test: "level 1 B test 2 fails", Output: "\n",},
 				{Action: "output", Test: "level 1 B test 2 fails", Output: "Ran 4 of 4 Specs in TIME\n",},
 				{Action: "output", Test: "level 1 B test 2 fails", Output: "FAIL! -- 0 Passed | 4 Failed | 0 Pending | 0 Skipped\n",},
+				{Action: "fail", Test: "level 1 B test 2 fails", Output: "FAIL! -- 0 Passed | 4 Failed | 0 Pending | 0 Skipped\n",},
 			}))
 
 			Expect(groups[5]).To(Equal([]testJsonEntry{
@@ -322,9 +318,6 @@ var _ = Describe("GoTestCompatibleReporter", func() {
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "•\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "--- PASS: level 1 B test 2 passes (TIME)\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "\n",},
-				{Action: "pass", Test: "level 1 B test 2 passes", Output: "\n",},
-				{Action: "output", Test: "level 1 B test 2 passes", Output: "FAIL\n",},
-				{Action: "output", Test: "level 1 B test 2 passes", Output: "\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "Summarizing 2 Failures:\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "\n",},
@@ -336,6 +329,7 @@ var _ = Describe("GoTestCompatibleReporter", func() {
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "Ran 4 of 4 Specs in TIME\n",},
 				{Action: "output", Test: "level 1 B test 2 passes", Output: "FAIL! -- 2 Passed | 2 Failed | 0 Pending | 0 Skipped\n",},
+				{Action: "pass", Test: "level 1 B test 2 passes", Output: "FAIL! -- 2 Passed | 2 Failed | 0 Pending | 0 Skipped\n",},
 			}))
 
 			Expect(groups[5]).To(Equal([]testJsonEntry{

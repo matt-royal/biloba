@@ -57,25 +57,17 @@ func (r *gotestCompatibleReporter) SpecDidComplete(spec *types.SpecSummary) {
 
 }
 
-func (r *gotestCompatibleReporter) SpecSuiteDidEnd(summary *types.SuiteSummary) {
-	if summary.SuiteSucceeded {
-		fmt.Println("\nPASS")
-	} else {
-		fmt.Println("\nFAIL")
-	}
-}
-
 func testName(spec *types.SpecSummary) string {
 	return strings.Join(spec.ComponentTexts[1:len(spec.ComponentTexts)], " ")
 }
 
 // No-Op methods for compatibility with ginkgo.Reporter
 
-func (r *gotestCompatibleReporter) AfterSuiteDidRun(setupSummary *types.SetupSummary) {
-}
+func (r *gotestCompatibleReporter) AfterSuiteDidRun(setupSummary *types.SetupSummary) {}
 
-func (r *gotestCompatibleReporter) BeforeSuiteDidRun(setupSummary *types.SetupSummary) {
-}
+func (r *gotestCompatibleReporter) BeforeSuiteDidRun(setupSummary *types.SetupSummary) {}
+
+func (r *gotestCompatibleReporter) SpecSuiteDidEnd(summary *types.SuiteSummary) {}
 
 func (r *gotestCompatibleReporter) SpecSuiteWillBegin(config config.GinkgoConfigType, summary *types.SuiteSummary) {
 }
