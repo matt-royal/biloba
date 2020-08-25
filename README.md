@@ -9,7 +9,7 @@ To try it out, replace your existing calls to
 with the following... 
 
 ```go
-RunSpecsWithCustomReporters(t, "My Suite", biloba.DefaultReporters())
+RunSpecsWithDefaultAndCustomReporters(t, "My Suite", biloba.GoLandReporter())
 ```
 
 Outside of GoLand the output will be unchanged. When running tests from GoLand, it will add an additional reporter to 
